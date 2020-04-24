@@ -44,7 +44,7 @@ func TestSortChromosome(t *testing.T) {
 	sort.Sort(sort.Reverse(cwfs))
 	chromosomes := cwfs.chromosomes()
 	for i, chromosome := range chromosomes {
-		mock, _ := chromosome.(mockChromosome)
+		mock, _:= chromosome.(mockChromosome)
 		if results[i] != mock {
 			t.Fatalf("%v failed [%v]: expected %v got %v", t.Name(), i+1, results[i], mock)
 		}
