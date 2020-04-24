@@ -22,7 +22,7 @@ func (cwf chromosomesWithFitness) Len() int {
 }
 
 // Less reports whether the chromosome with
-// ith index is less fitter than jth index chromosome
+// ith index is less fitter than jth index chromosome.
 func (cwf chromosomesWithFitness) Less(i, j int) bool {
 	return cwf[i].fitness < cwf[j].fitness
 }
