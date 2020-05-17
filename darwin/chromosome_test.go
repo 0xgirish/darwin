@@ -5,39 +5,38 @@ import (
 	"testing"
 )
 
+// mockChromosome for testing
 type mockChromosome struct {
 	name string
 }
 
-func newMockChromosome(name string) mockChromosome {
-	return mockChromosome{name}
+// Crossover create new chromosome using crossover with ch chromosome
+func (mc mockChromosome) Crossover(ch Chromosome, crossoverPorb float64) Chromosome {
+	return mockChromosome{mc.name + "_corssed"}
 }
 
-func (mc mockChromosome) Crossover(ch Chromosome) Chromosome {
-	return mockChromosome{mc.name + "_crossed"}
-}
-
+// Mutation mutates current chromosome with some mutation probability
 func (mc mockChromosome) Mutation(mutationProb float64) Chromosome {
 	return mockChromosome{mc.name + "_mutated"}
 }
 
 func TestSortChromosome(t *testing.T) {
-	cwfs := chromosomesWithFitness{
-		chromosomeWithFitness{newMockChromosome("ch1"), 1.0},
-		chromosomeWithFitness{newMockChromosome("ch2"), 10.0},
-		chromosomeWithFitness{newMockChromosome("ch3"), 5.0},
-		chromosomeWithFitness{newMockChromosome("ch4"), 1.5},
-		chromosomeWithFitness{newMockChromosome("ch5"), 23.0},
-		chromosomeWithFitness{newMockChromosome("ch6"), 11.0},
+	cwfs := cwfpairs{
+		cwfpair{mockChromosome{"ch1"}, 1.0},
+		cwfpair{mockChromosome{"ch2"}, 10.0},
+		cwfpair{mockChromosome{"ch3"}, 5.0},
+		cwfpair{mockChromosome{"ch4"}, 1.5},
+		cwfpair{mockChromosome{"ch5"}, 23.0},
+		cwfpair{mockChromosome{"ch6"}, 11.0},
 	}
 
 	results := []mockChromosome{
-		newMockChromosome("ch5"),
-		newMockChromosome("ch6"),
-		newMockChromosome("ch2"),
-		newMockChromosome("ch3"),
-		newMockChromosome("ch4"),
-		newMockChromosome("ch1"),
+		mockChromosome{"ch5"},
+		mockChromosome{"ch6"},
+		mockChromosome{"ch2"},
+		mockChromosome{"ch3"},
+		mockChromosome{"ch4"},
+		mockChromosome{"ch1"},
 	}
 
 	sort.Sort(sort.Reverse(cwfs))

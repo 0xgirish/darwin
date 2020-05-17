@@ -9,7 +9,7 @@ import (
 type Population struct {
 	env         Env
 	size        uint
-	chromosomes []Chromosome
+	Chromosomes []Chromosome
 }
 
 // NewPopulation of chromosomes in the env
@@ -18,7 +18,7 @@ func NewPopulation(chromosomes []Chromosome, env Env) Population {
 	return Population{
 		env:         env,
 		size:        uint(size),
-		chromosomes: chromosomes,
+		Chromosomes: chromosomes,
 	}
 }
 
@@ -30,12 +30,12 @@ func (p Population) Select(topK uint) []Chromosome {
 	}
 
 	// calculate fitness of all the chromosomes in env
-	_cwf := make(chan chromosomeWithFitness, p.size)
+	_cwf := make(chan cwfpair, p.size)
 	for i := 0; i < int(p.size); i++ {
 		go p.fitness(i, _cwf)
 	}
 
-	cwf := make(chromosomesWithFitness, p.size)
+	cwf := make(cwfpairs, p.size)
 	for i := 0; i < int(p.size); i++ {
 		cwf[i] = <-_cwf
 	}
@@ -45,7 +45,8 @@ func (p Population) Select(topK uint) []Chromosome {
 	return cwf.chromosomes()[:topK]
 }
 
-func (p Population) fitness(i int, _cwf chan<- chromosomeWithFitness) {
-	fitness := p.env.Fit(p.chromosomes[i])
-	_cwf <- chromosomeWithFitness{chromosome: p.chromosomes[i], fitness: fitness}
+// get fitness of the chromosome with index i relative to the environment
+func (p Population) fitness(i int, _cwf chan<- cwfpair) {
+	fitness := p.env.Fit(p.Chromosomes[i])
+	_cwf <- cwfpair{chromosome: p.Chromosomes[i], fitness: fitness}
 }

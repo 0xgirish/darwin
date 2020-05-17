@@ -11,21 +11,21 @@ func TestPopulationSelect(t *testing.T) {
 	defer ctrl.Finish()
 
 	chromosomes := []Chromosome{
-		newMockChromosome("ch1"),
-		newMockChromosome("ch2"),
-		newMockChromosome("ch3"),
-		newMockChromosome("ch4"),
-		newMockChromosome("ch5"),
-		newMockChromosome("ch6"),
+		mockChromosome{"ch1"},
+		mockChromosome{"ch2"},
+		mockChromosome{"ch3"},
+		mockChromosome{"ch4"},
+		mockChromosome{"ch5"},
+		mockChromosome{"ch6"},
 	}
 
 	results := []Chromosome{
-		newMockChromosome("ch5"),
-		newMockChromosome("ch6"),
-		newMockChromosome("ch2"),
-		newMockChromosome("ch3"),
-		newMockChromosome("ch4"),
-		newMockChromosome("ch1"),
+		mockChromosome{"ch5"},
+		mockChromosome{"ch6"},
+		mockChromosome{"ch2"},
+		mockChromosome{"ch3"},
+		mockChromosome{"ch4"},
+		mockChromosome{"ch1"},
 	}
 
 	env := NewmockEnv(ctrl)
