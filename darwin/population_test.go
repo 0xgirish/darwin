@@ -36,8 +36,8 @@ func TestPopulationSelect(t *testing.T) {
 	env.EXPECT().Fit(chromosomes[4]).Return(23.0).Times(1)
 	env.EXPECT().Fit(chromosomes[5]).Return(11.0).Times(1)
 
-	population := NewPopulation(chromosomes, env)
-	selection := population.Select(uint(len(chromosomes)) + 1)
+	population := NewPopulation(chromosomes)
+	selection := population.Select(uint(len(chromosomes))+1, env)
 	for i := 0; i < len(chromosomes); i++ {
 		if results[i] != selection[i] {
 			t.Errorf("%v failed [%v]: expected %v, got %v", t.Name(),
