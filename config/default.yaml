@@ -1,0 +1,4 @@
+topk: 5
+mutation: 0.06
+crossover: 0.6
+population: 10

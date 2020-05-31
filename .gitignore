@@ -3,3 +3,5 @@ region/*.osm
 en.utf-8.add
 en.utf-8.add.spl
 session.vim
+gobtp
+vendor/*
