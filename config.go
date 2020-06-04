@@ -38,18 +38,16 @@ func (c *Config) Parse() (err error) {
 	defer file.Close()
 
 	// unmarshal yaml to config
-	d := yaml.NewDecoder(file)
-	err = d.Decode(c)
+	err = yaml.NewDecoder(file).Decode(c)
 	return
 }
 
 func (c Config) String() string {
-	return fmt.Sprintf(`
-Config {
+	return fmt.Sprintf(
+		`Config {
     TopK:           %v,
     MutationProb:   %v,
     CrossoverProb:  %v,
     PopulationSize: %v,
-}
-    `, c.TopK, c.MutationProb, c.CrossoverProb, c.PopulationSize)
+}`, c.TopK, c.MutationProb, c.CrossoverProb, c.PopulationSize)
 }
