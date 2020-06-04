@@ -3,8 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	config := NewConfig()
-	config.Parse()
+	config, err := NewConfig()
+	if err != nil {
+		panic(err)
+	}
 
 	fmt.Println(config)
 	// TODO: create env for ga

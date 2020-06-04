@@ -23,13 +23,8 @@ type Config struct {
 	PopulationSize uint    `yaml:"population"`
 }
 
-// new empty config
-func NewConfig() Config {
-	return Config{}
-}
-
-// Parse configPath yaml to struct
-func (c *Config) Parse() (err error) {
+// NewConfig from ConfigPath
+func NewConfig() (c Config, err error) {
 	// open file for decoding
 	file, err := os.Open(ConfigPath)
 	if err != nil {
@@ -38,7 +33,7 @@ func (c *Config) Parse() (err error) {
 	defer file.Close()
 
 	// unmarshal yaml to config
-	err = yaml.NewDecoder(file).Decode(c)
+	err = yaml.NewDecoder(file).Decode(&c)
 	return
 }
 
