@@ -1,32 +1,31 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 
 	yaml "gopkg.in/yaml.v3"
 )
 
-var ConfigPath string
-
-func init() {
-	flag.StringVar(&ConfigPath, "config", "config/default.yaml", "path to config file for GA parameters")
-	flag.Parse()
-}
-
 // Config for GA parameters
 type Config struct {
-	TopK           int     `yaml:"topk"`
-	MutationProb   float64 `yaml:"mutation"`
-	CrossoverProb  float64 `yaml:"crossover"`
-	PopulationSize uint    `yaml:"population"`
+	GA struct {
+		TopK           []int     `yaml:"topk"`
+		MutationProb   []float64 `yaml:"mutation_prob"`
+		CrossoverProb  []float64 `yaml:"crossover_prob"`
+		PopulationSize []uint    `yaml:"population"`
+	} `yaml:"ga"`
+	Extra struct {
+		Radius        float64   `yaml:"radius"`
+		NCircles      []uint    `yaml:"n_circles"`
+		MutationRange []float64 `yaml:"mutation_range"`
+	} `yaml:"extra"`
 }
 
-// NewConfig from ConfigPath
+// NewConfig from configPath
 func NewConfig() (c Config, err error) {
 	// open file for decoding
-	file, err := os.Open(ConfigPath)
+	file, err := os.Open(configPath)
 	if err != nil {
 		return
 	}
@@ -39,10 +38,16 @@ func NewConfig() (c Config, err error) {
 
 func (c Config) String() string {
 	return fmt.Sprintf(
-		`Config {
-    TopK:           %v,
-    MutationProb:   %v,
-    CrossoverProb:  %v,
-    PopulationSize: %v,
-}`, c.TopK, c.MutationProb, c.CrossoverProb, c.PopulationSize)
+		`Config
+	ga:
+		topk: %v
+		mutation_prob: %v
+		crossover_prob: %v
+		population: %v
+	extra:
+		radius: %v
+		n_circles: %v
+		mutation_range: %v
+	`, c.GA.TopK, c.GA.MutationProb, c.GA.CrossoverProb, c.GA.PopulationSize,
+		c.Extra.Radius, c.Extra.NCircles, c.Extra.MutationRange)
 }

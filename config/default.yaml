@@ -1,4 +1,24 @@
-topk: 5
-mutation: 0.06
-crossover: 0.6
-population: 10
+ga:
+    topk:
+        - 5
+    mutation_prob:
+        - 0.03
+        - 0.06
+        - 0.09
+    crossover_prob:
+        - 0.6
+    population:
+        - 40
+        - 50
+
+extra:
+    radius: 4
+    n_circles:
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+    mutation_range:
+        - 0.06
