@@ -1,5 +1,7 @@
 package darwin
 
+import "fmt"
+
 // Chromosome represents an solution candidate of problem
 type Chromosome interface {
 	// Crossover create new chromosome using crossover with ch chromosome
@@ -7,6 +9,12 @@ type Chromosome interface {
 
 	// Mutation mutates current chromosome with some mutation probability
 	Mutation(mutationProb float64) Chromosome
+
+	// Copy chromosome to another
+	Copy() Chromosome
+
+	// String makes chromosome printable
+	String() string
 }
 
 // cwfpair is a pair of chromosome and its fitness in the environment
@@ -31,6 +39,13 @@ func (cwf cwfpairs) Less(i, j int) bool {
 // Swap swaps two chromosomes with index i, j
 func (cwf cwfpairs) Swap(i, j int) {
 	cwf[i], cwf[j] = cwf[j], cwf[i]
+}
+
+func (cwf cwfpairs) Print() {
+	for i := 0; i < cwf.Len(); i++ {
+		fmt.Printf("%f ", cwf[i].fitness)
+	}
+	fmt.Println()
 }
 
 // extract chromosomes from cwfpairs

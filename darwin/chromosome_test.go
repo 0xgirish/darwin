@@ -20,6 +20,16 @@ func (mc mockChromosome) Mutation(mutationProb float64) Chromosome {
 	return mockChromosome{mc.name + "_mutated"}
 }
 
+// Copy chromosome
+func (mc mockChromosome) Copy() Chromosome {
+	return mockChromosome{name: mc.name}
+}
+
+// String makes mockChromosome printable
+func (mc mockChromosome) String() string {
+	return mc.name
+}
+
 func TestSortChromosome(t *testing.T) {
 	cwfs := cwfpairs{
 		cwfpair{mockChromosome{"ch1"}, 1.0},

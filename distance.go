@@ -7,7 +7,7 @@ func hsin(theta float64) float64 {
 	return math.Pow(math.Sin(theta/2), 2)
 }
 
-// Distance function returns the distance (in kilometers) between two points of
+// Geodisc function returns the distance (in kilometers) between two points of
 //     a given longitude and latitude relatively accurately (using a spherical
 //     approximation of the Earth) through the Haversin Distance Formula for
 //     great arc distance on a sphere with accuracy for small distances

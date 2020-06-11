@@ -10,12 +10,16 @@ import (
 // Config for GA parameters
 type Config struct {
 	GA struct {
-		TopK           []int     `yaml:"topk"`
-		MutationProb   []float64 `yaml:"mutation_prob"`
-		CrossoverProb  []float64 `yaml:"crossover_prob"`
-		PopulationSize []uint    `yaml:"population"`
+		SelectionPercentage float64   `yaml:"selection_percentage"`
+		MutationProb        []float64 `yaml:"mutation_prob"`
+		CrossoverProb       []float64 `yaml:"crossover_prob"`
+		PopulationSize      []uint    `yaml:"population"`
 	} `yaml:"ga"`
 	Extra struct {
+		Iterations    uint      `yaml:"iterations"`
+		Region        string    `yaml:"region"`
+		LatsRange     []float64 `yaml:"lats_range"`
+		LonsRange     []float64 `yaml:"lons_range"`
 		Radius        float64   `yaml:"radius"`
 		NCircles      []uint    `yaml:"n_circles"`
 		MutationRange []float64 `yaml:"mutation_range"`
@@ -40,14 +44,19 @@ func (c Config) String() string {
 	return fmt.Sprintf(
 		`Config
 	ga:
-		topk: %v
+		selection_percentage: %v
 		mutation_prob: %v
 		crossover_prob: %v
 		population: %v
 	extra:
+		iterations: %v
+		region: %v
+		lats_range: %v
+		lons_range: %v
 		radius: %v
 		n_circles: %v
 		mutation_range: %v
-	`, c.GA.TopK, c.GA.MutationProb, c.GA.CrossoverProb, c.GA.PopulationSize,
+	`, c.GA.SelectionPercentage, c.GA.MutationProb, c.GA.CrossoverProb, c.GA.PopulationSize,
+		c.Extra.Iterations, c.Extra.Region, c.Extra.LatsRange, c.Extra.LonsRange,
 		c.Extra.Radius, c.Extra.NCircles, c.Extra.MutationRange)
 }

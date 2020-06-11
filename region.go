@@ -7,12 +7,14 @@ import (
 	"github.com/gocarina/gocsv"
 )
 
+// Shop coordinates in the map
 type Shop struct {
 	Lat float64 `csv:"lat"`
 	Lon float64 `csv:"lon"`
 }
 
-func Shops() (shops []*Shop, err error) {
+// Shops return shops from csv file
+func Shops(region string) (shops []*Shop, err error) {
 	// open shops.csv file for corresponding region
 	csvfile, err := os.Open(fmt.Sprintf("csv/%s/shops.csv", region))
 	if err != nil {
@@ -24,6 +26,7 @@ func Shops() (shops []*Shop, err error) {
 	return
 }
 
+// Head is equvalent to padas head
 func Head(shops []*Shop) {
 	size := len(shops)
 

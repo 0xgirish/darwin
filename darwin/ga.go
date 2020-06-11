@@ -15,16 +15,21 @@ type GeneticAlgorithm struct {
 	// PopulationSize is number of chromosomes in the population
 	PopulationSize uint
 	// Mutate generate mutated population
-	Mutate func(p Population) Population
+	Mutate func(p []Chromosome, prob float64) []Chromosome
 	// Corossover generated new populations with crossover
-	Crossover func(p Population) Population
+	Crossover func(p []Chromosome, prob float64, nchilds uint) []Chromosome
 }
 
 // Iterate does a single iteration of selection, corssover and mutation on the population
-func (ga GeneticAlgorithm) Iterate(p Population, env Env) Population {
-	elitePopulation := NewPopulation(p.Select(ga.TopK, env))
-	offspring := ga.Crossover(elitePopulation)
-	newGeneration := ga.Mutate(offspring)
+func (ga GeneticAlgorithm) Iterate(p Population, env Env, selection SelectionMethod) Population {
+	eliteChromosomes := p.Select(ga.TopK, env, selection)
 
-	return newGeneration
+	// create nchilds using crossover
+	// nchilds := uint(p.size - ga.TopK)
+	offspring := ga.Crossover(eliteChromosomes, ga.CrossoverProb, p.size)
+
+	// newChromosomes := append(eliteChromosomes, offspring...)
+	newGeneration := ga.Mutate(offspring, ga.MutationProb)
+
+	return NewPopulation(newGeneration)
 }
