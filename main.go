@@ -24,39 +24,40 @@ func main() {
 	env := Env{radius: config.Extra.Radius, shops: shops}
 	fmt.Printf("ncircles,cprob,mprob,mrange,sp,fitness,covered,overlaped\n")
 	for _, ncircles := range config.Extra.NCircles {
-		popsize := config.GA.PopulationSize[0]
-		mrange := config.Extra.MutationRange[0]
-		topk := uint(float64(popsize) * selectionPercentage)
+		for _, popsize := range config.GA.PopulationSize {
+			topk := uint(float64(popsize) * selectionPercentage)
 
-		for _, cprob := range config.GA.CrossoverProb {
-			for _, mprob := range config.GA.MutationProb {
-				ga := darwin.GeneticAlgorithm{
-					TopK:           topk,
-					MutationProb:   mprob,
-					CrossoverProb:  cprob,
-					PopulationSize: popsize,
-					Mutate:         Mutate,
-					Crossover:      Crossover,
-				}
-				// TODO: store data in a file
-				chromosomes := make([]darwin.Chromosome, popsize)
-				for i := 0; i < int(popsize); i++ {
-					chromosomes[i] = NewInstance(ncircles, mrange, coordRange)
-				}
+			for _, cprob := range config.GA.CrossoverProb {
+				for _, mprob := range config.GA.MutationProb {
+					for _, mrange := range config.Extra.MutationRange {
+						ga := darwin.GeneticAlgorithm{
+							TopK:           topk,
+							MutationProb:   mprob,
+							CrossoverProb:  cprob,
+							PopulationSize: popsize,
+							Mutate:         Mutate,
+							Crossover:      Crossover,
+						}
+						chromosomes := make([]darwin.Chromosome, popsize)
+						for i := 0; i < int(popsize); i++ {
+							chromosomes[i] = NewInstance(ncircles, mrange, coordRange)
+						}
 
-				p := darwin.NewPopulation(chromosomes)
-				for i := 0; i < int(config.Extra.Iterations); i++ {
-					p = ga.Iterate(p, &env, darwin.RankSelection)
-					log.Printf("-------------------------------------------\n")
+						p := darwin.NewPopulation(chromosomes)
+						for i := 0; i < int(config.Extra.Iterations); i++ {
+							p = ga.Iterate(p, &env, darwin.RankSelection)
+							log.Printf("-------------------------------------------\n")
+						}
+						fittest := p.Fittest(&env)
+						fitness, metadata := env.Fit(fittest)
+						mdata, _ := metadata.(meta)
+						fmt.Printf("%d,%.3f,%.3f,%.3f,%.2f,%.4f,%.4f,%.4f\n",
+							ncircles, cprob, mprob, mrange, selectionPercentage,
+							fitness, mdata.Covered, mdata.Overlaped)
+					}
 				}
-				fittest := p.Fittest(&env)
-				fitness, metadata := env.Fit(fittest)
-				mdata, _ := metadata.(meta)
-				fmt.Printf("%d,%.3f,%.3f,%.3f,%.2f,%.4f,%.4f,%.4f\n",
-					ncircles, cprob, mprob, mrange, selectionPercentage,
-					fitness, mdata.Covered, mdata.Overlaped)
+				fmt.Printf("-------------------------------------------\n")
 			}
-			fmt.Printf("-------------------------------------------\n")
 		}
 	}
 }
