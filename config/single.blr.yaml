@@ -1,7 +1,7 @@
 ga:
     selection_percentage: 0.35
     mutation_prob:
-        - 0.03
+        - 0.06
     crossover_prob:
         - 0.65
     population:
@@ -9,15 +9,15 @@ ga:
 
 extra:
     iterations: 200
-    region: dlh
+    region: blr
     lats_range:
-        - 28.5504000
-        - 28.7330000
+        - 12.8627000
+        - 13.1002000
     lons_range:
-        - 77.0423000
-        - 77.3911000
+        - 77.4358000
+        - 77.7846000
     radius: 4
     n_circles:
-        - 10
+        - 12
     mutation_range:
-        - 0.04
+        - 0.03

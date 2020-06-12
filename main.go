@@ -54,6 +54,7 @@ func main() {
 						fmt.Printf("%d,%d,%.3f,%.3f,%.3f,%.2f,%.4f,%.4f,%.4f\n",
 							ncircles, popsize, cprob, mprob, mrange, selectionPercentage,
 							fitness, mdata.Covered, mdata.Overlaped)
+						fmt.Println(fittest)
 					}
 				}
 				fmt.Printf("-------------------------------------------\n")

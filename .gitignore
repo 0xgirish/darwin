@@ -4,4 +4,7 @@ en.utf-8.add
 en.utf-8.add.spl
 session.vim
 gobtp
+dlh
+blr
 vendor/*
+.ipynb_checkpoints/
