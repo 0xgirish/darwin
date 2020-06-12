@@ -22,7 +22,7 @@ func main() {
 	selectionPercentage := config.GA.SelectionPercentage
 
 	env := Env{radius: config.Extra.Radius, shops: shops}
-	fmt.Printf("ncircles,cprob,mprob,mrange,sp,fitness,covered,overlaped\n")
+	fmt.Printf("ncircles,popsize,cprob,mprob,mrange,sp,fitness,covered,overlaped\n")
 	for _, ncircles := range config.Extra.NCircles {
 		for _, popsize := range config.GA.PopulationSize {
 			topk := uint(float64(popsize) * selectionPercentage)
@@ -51,8 +51,8 @@ func main() {
 						fittest := p.Fittest(&env)
 						fitness, metadata := env.Fit(fittest)
 						mdata, _ := metadata.(meta)
-						fmt.Printf("%d,%.3f,%.3f,%.3f,%.2f,%.4f,%.4f,%.4f\n",
-							ncircles, cprob, mprob, mrange, selectionPercentage,
+						fmt.Printf("%d,%d,%.3f,%.3f,%.3f,%.2f,%.4f,%.4f,%.4f\n",
+							ncircles, popsize, cprob, mprob, mrange, selectionPercentage,
 							fitness, mdata.Covered, mdata.Overlaped)
 					}
 				}
