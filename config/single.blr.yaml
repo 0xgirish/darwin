@@ -1,11 +1,11 @@
 ga:
     selection_percentage: 0.35
     mutation_prob:
-        - 0.06
+        - 0.03
     crossover_prob:
         - 0.65
     population:
-        - 60
+        - 80
 
 extra:
     iterations: 200
@@ -16,8 +16,8 @@ extra:
     lons_range:
         - 77.4358000
         - 77.7846000
-    radius: 4
+    radius: 5
     n_circles:
         - 12
     mutation_range:
-        - 0.03
+        - 0.04
