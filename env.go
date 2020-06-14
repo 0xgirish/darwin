@@ -5,8 +5,9 @@ import (
 )
 
 type meta struct {
-	Covered   float64
-	Overlaped float64
+	Covered         float64
+	Overlaped       float64
+	coveredNcircles []float64
 }
 
 // Env for btp
@@ -21,8 +22,9 @@ func (env *Env) Fit(ch darwin.Chromosome) (float64, darwin.MetaData) {
 
 	ins, _ := ch.(Instance)
 	covered := make([]uint, nshops)
+	coveredNcircles := make([]float64, ins.ncircles)
 	for c := 0; c < int(ins.ncircles); c++ {
-		env.coverage(ins.lats[c], ins.lons[c], covered)
+		coveredNcircles[c] = env.coverage(ins.lats[c], ins.lons[c], covered)
 	}
 
 	coveredNodes, overlapedNodes := 0, 0
@@ -42,17 +44,24 @@ func (env *Env) Fit(ch darwin.Chromosome) (float64, darwin.MetaData) {
 	// fitness := (coveredPercentage - overlapedPercentage)
 	fitness := coveredPercentage / (overlapedPercentage + 1)
 
-	metadata := meta{Covered: coveredPercentage, Overlaped: overlapedPercentage}
+	metadata := meta{
+		Covered:         coveredPercentage,
+		Overlaped:       overlapedPercentage,
+		coveredNcircles: coveredNcircles,
+	}
 	return fitness, metadata
 }
 
-func (env *Env) coverage(lat, lon float64, covered []uint) {
+func (env *Env) coverage(lat, lon float64, covered []uint) float64 {
 	nshops := len(env.shops)
 
+	coveredPercentage := 0.0
 	for i := 0; i < nshops; i++ {
 		slat, slon := env.shops[i].Lat, env.shops[i].Lon
 		if Geodisc(lat, lon, slat, slon) <= env.radius {
 			covered[i]++
+			coveredPercentage++
 		}
 	}
+	return coveredPercentage / float64(nshops)
 }

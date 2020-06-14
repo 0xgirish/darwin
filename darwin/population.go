@@ -79,8 +79,8 @@ func RankSelection(cwfs cwfpairs, topK uint) []Chromosome {
 
 // get fitness of the chromosome with index i relative to the environment
 func (p Population) fitness(i int, env Env, _cwf chan<- cwfpair) {
-	fitness, _ := env.Fit(p.Chromosomes[i]) // ignore metadata
+	fitness, metadata := env.Fit(p.Chromosomes[i]) // ignore metadata
 
 	log.Printf("chromosome: %v, fitness: %v", i, fitness)
-	_cwf <- cwfpair{chromosome: p.Chromosomes[i], fitness: fitness}
+	_cwf <- cwfpair{chromosome: p.Chromosomes[i], fitness: fitness, metaData: metadata}
 }

@@ -21,6 +21,7 @@ type Chromosome interface {
 type cwfpair struct {
 	chromosome Chromosome
 	fitness    float64
+	metaData   MetaData
 }
 
 type cwfpairs []cwfpair
