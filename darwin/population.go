@@ -51,7 +51,7 @@ func (p Population) Fittest(env Env) Chromosome {
 
 // WheelSelection implement Roulette wheel selection algorithm
 func WheelSelection(cwfs cwfpairs, topK uint) []Chromosome {
-	sort.Sort(cwfs)
+	sort.Sort(sort.Reverse(cwfs))
 	popsize, sumfitness := len(cwfs), 0.0
 	for i := 0; i < popsize; i++ {
 		sumfitness += cwfs[i].fitness
