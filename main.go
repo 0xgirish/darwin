@@ -54,7 +54,7 @@ func main() {
 						fmt.Printf("%d,%d,%.3f,%.3f,%.3f,%.2f,%.4f,%.4f,%.4f\n",
 							ncircles, popsize, cprob, mprob, mrange, selectionPercentage,
 							fitness, mdata.Covered, mdata.Overlaped)
-						fmt.Println(fittest)
+						// fmt.Println(fittest)
 					}
 				}
 				fmt.Printf("-------------------------------------------\n")
@@ -101,11 +101,10 @@ func (ins Instance) Crossover(ch darwin.Chromosome, crossoverProb float64) darwi
 	// with corssoverProb do corssover of ins and mate
 	if darwin.Flip(crossoverProb) {
 		child, _ := ins.Copy().(Instance)
-		for i := 0; i < int(ins.ncircles); i++ {
+		crossover_point := darwin.RandIntn(int(ins.ncircles))
+		for i := crossover_point; i < int(ins.ncircles); i++ {
 			// choose mates gnome with 1/2 probability
-			if darwin.Flip(crossoverProb) {
-				child.lats[i], child.lons[i] = mate.lats[i], mate.lons[i]
-			}
+			child.lats[i], child.lons[i] = mate.lats[i], mate.lons[i]
 		}
 		return child
 	}

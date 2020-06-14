@@ -39,8 +39,8 @@ func (env *Env) Fit(ch darwin.Chromosome) (float64, darwin.MetaData) {
 	coveredPercentage := float64(100*coveredNodes) / float64(nshops)
 	overlapedPercentage := float64(100*overlapedNodes) / float64(nshops)
 
-	// fitness := (coveredPercentage - overlapedPercentage)
-	fitness := coveredPercentage / (overlapedPercentage + 1)
+	fitness := (coveredPercentage - overlapedPercentage)
+	// fitness := coveredPercentage / (overlapedPercentage + 1)
 
 	metadata := meta{Covered: coveredPercentage, Overlaped: overlapedPercentage}
 	return fitness, metadata
