@@ -12,7 +12,12 @@ func Crossover(p []darwin.Chromosome, prob float64, nchilds uint) []darwin.Chrom
 	for i := 0; i < int(nchilds); i++ {
 		r1, r2 := darwin.RandIntn(size), darwin.RandIntn(size)
 		parent1, parent2 := p[r1], p[r2]
-		children[i] = parent1.Crossover(parent2, prob)
+		instance1, instance2 := parent1.(InstanceN), parent2.(InstanceN)
+		if instance1.ncircles <= instance2.ncircles {
+			children[i] = parent1.Crossover(parent2, prob)
+			continue
+		}
+		children[i] = parent2.Crossover(parent1, prob)
 	}
 	return children
 }

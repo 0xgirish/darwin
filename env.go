@@ -19,7 +19,7 @@ type Env struct {
 func (env *Env) Fit(ch darwin.Chromosome) (float64, darwin.MetaData) {
 	nshops := len(env.shops)
 
-	ins, _ := ch.(Instance)
+	ins, _ := ch.(InstanceN)
 	covered := make([]uint, nshops)
 	for c := 0; c < int(ins.ncircles); c++ {
 		env.coverage(ins.lats[c], ins.lons[c], covered)
@@ -39,8 +39,8 @@ func (env *Env) Fit(ch darwin.Chromosome) (float64, darwin.MetaData) {
 	coveredPercentage := float64(100*coveredNodes) / float64(nshops)
 	overlapedPercentage := float64(100*overlapedNodes) / float64(nshops)
 
-	// fitness := (coveredPercentage - overlapedPercentage)
-	fitness := coveredPercentage / (overlapedPercentage + 1)
+	fitness := (coveredPercentage - 8*overlapedPercentage)
+	// fitness := coveredPercentage / (overlapedPercentage + 1)
 
 	metadata := meta{Covered: coveredPercentage, Overlaped: overlapedPercentage}
 	return fitness, metadata
